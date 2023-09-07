@@ -11,6 +11,14 @@
                 <template #head(index)="label">
                     <span class="text-secondary"> {{ label.label }} </span>
                 </template>
+                <template #head(price)="label">
+                    <span class="text-secondary"> {{ label.label }} </span>
+                </template>
+                <template #cell(price)="data">
+                    <span v-if="data.item.product_id">
+                       đ {{ data.item.product.price }}
+                    </span>
+                </template>
                 <template #head(quantity)="label">
                     <span class="text-secondary"> {{ label.label }} </span>
                 </template>
@@ -30,6 +38,15 @@
                 </template>
             </b-table>
         </div>
+        <div class="form-group footer">
+            <div class="float-left">
+                <button class="btn btn-sm btn-danger" @click="deleteSelecteds()"><i class="fa fa-trash mr-2"></i>Xóa</button>
+            </div>
+            <div class="float-right">
+                <label>Tổng thanh toán ({{ selecteds.length }} sản phẩm)</label>
+                <button class="btn btn-sm btn-primary" @click="buySelecteds()"><i class="fa fa-shopping-cart mr-2"></i>Mua</button>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -47,6 +64,10 @@ export default {
                 {
                     key: 'product_id',
                     label: 'Sản phẩm',
+                },
+                {
+                    key: 'price',
+                    label: 'Đơn giá',
                 },
                 {
                     key: 'quantity',
@@ -95,5 +116,12 @@ export default {
     width: 100%;
     height: 150px;
     object-fit: contain; /* Đảm bảo tỷ lệ khung hình được duy trì */
+}
+.footer{
+    position: fixed;
+    bottom: 0;
+    width: 98%;
+    padding: 10px;
+    background-color: #fff;
 }
 </style>
