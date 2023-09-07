@@ -8,6 +8,7 @@ Route::get('/','AuthUserController@index', function () {
     return view('welcome');
 });
 Route::get('/product-detail/{id}' ,'AuthUserController@product_detail');
+Route::get('/card/buy-selecteds' ,'AuthUserController@buy_selected');
 Route::get('/admin', 'HomeController@admin')->name('color');
 Route::middleware('auth')->group(function () {
     Route::get('/setting','AuthUserController@index', [HomeController::class, 'index']);
