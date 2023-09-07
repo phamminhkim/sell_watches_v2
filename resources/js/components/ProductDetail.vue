@@ -3,7 +3,7 @@
        <div class="row">
         <div class="col-lg-4">
             <div class="form-group" v-for="(image,index) in product_details.images" :key="index" >
-                <img :src="image.path" />
+                <img :src="'../' + image.path" />
             </div>
         </div>
         <div class="col-lg-8">
@@ -22,7 +22,7 @@ export default {
         return {
 
             page_url_product: "/api/product-detail",
-            product_details: [],
+            product_details: {},
         }
     },
     created() {
