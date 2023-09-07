@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthUserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $accessToken = null;
         $currentUser = null;

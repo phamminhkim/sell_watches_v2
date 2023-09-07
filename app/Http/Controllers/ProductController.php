@@ -18,9 +18,9 @@ class ProductController extends AuthUserController
         $this->productRepository = $productRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productRepository->getAll();
+        $products = $this->productRepository->getAll($request);
         $result = array();
         $result['data'] = $products; 
 

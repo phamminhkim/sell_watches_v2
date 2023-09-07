@@ -16,7 +16,8 @@ class BrandController extends AuthUserController
     {
         $this->brand = $brandRepository;
     }
-    public function index()
+    public function index(Request $request)
+
     {
         $brand = $this->brand->getAll();
         $result = array();
