@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group container">
-            <b-table :items="cards" :fields="fields" responsive hover >
+            <b-table :items="cards" :fields="fields" responsive hover>
                 <template #cell(selected)="data">
                     <input type="checkbox" v-model="selecteds" :value="data.item" />
                 </template>
@@ -16,7 +16,7 @@
                 </template>
                 <template #cell(price)="data">
                     <span v-if="data.item.product_id">
-                       đ {{ data.item.product.price }}
+                        đ {{ data.item.product.price }}
                     </span>
                 </template>
                 <template #head(quantity)="label">
@@ -26,25 +26,30 @@
                     <span class="text-secondary"> {{ label.label }} </span>
                 </template>
                 <template #cell(product_id)="data">
-                    <div class="d-flex align-items-baseline" v-if="data.item.product_id" >
-                        <div class="float-left mr-2" v-if="data.item.product.images.length > 0" v-for="image in data.item.product.images" >
+                    <div class="d-flex align-items-baseline" v-if="data.item.product_id">
+                        <div class="float-left mr-2" v-if="data.item.product.images.length > 0"
+                            v-for="image in data.item.product.images">
                             <img :src="image.path" class="thumbnail-image " />
-                        </div> 
+                        </div>
                         {{ data.item.product.name }}
                     </div>
                 </template>
                 <template #cell(action)="data">
-                    <button class="btn btn-sm btn-danger" @click="deleteCard(data.item.id)"><i class="fa fa-trash mr-2"></i>Xóa</button>
+                    <button class="btn btn-sm btn-danger" @click="deleteCard(data.item.id)"><i
+                            class="fa fa-trash mr-2"></i>Xóa</button>
                 </template>
             </b-table>
         </div>
         <div class="form-group footer">
             <div class="float-left">
-                <button class="btn btn-sm btn-danger" @click="deleteSelecteds()"><i class="fa fa-trash mr-2"></i>Xóa</button>
+                <button class="btn btn-sm btn-danger" @click="deleteSelecteds()"><i
+                        class="fa fa-trash mr-2"></i>Xóa</button>
             </div>
             <div class="float-right">
-                <label class="text-secondary text-uppercase">Tổng thanh toán ({{ selecteds.length }} sản phẩm): {{total_price}} đ</label>
-                <button class="btn btn-sm btn-primary" @click="buySelecteds()"><i class="fa fa-shopping-cart mr-2"></i>Mua</button>
+                <label class="text-secondary text-uppercase">Tổng thanh toán ({{ selecteds.length }} sản phẩm):
+                    {{ total_price }} đ</label>
+                <button class="btn btn-sm btn-primary" type="button" @click="buySelecteds()"><i
+                        class="fa fa-shopping-cart mr-2"></i>Mua</button>
             </div>
         </div>
     </div>
@@ -107,6 +112,12 @@ export default {
                     console.log(err);
 
                 });
+        },
+        buySelecteds() {
+            const formData = new FormData();
+            formData.append('selecteds', JSON.stringify(this.selecteds));
+            var params = new URLSearchParams(formData);
+            window.location.href = '/card/buy-selecteds' + '?' + params.toString();
         }
     },
     computed: {
@@ -124,13 +135,14 @@ export default {
 .thumbnail-image {
     width: 100%;
     height: 150px;
-    object-fit: contain; /* Đảm bảo tỷ lệ khung hình được duy trì */
+    object-fit: contain;
+    /* Đảm bảo tỷ lệ khung hình được duy trì */
 }
-.footer{
+
+.footer {
     position: fixed;
     bottom: 0;
     width: 98%;
     padding: 10px;
     background-color: #fff;
-}
-</style>
+}</style>
