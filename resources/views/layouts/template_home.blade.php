@@ -89,21 +89,21 @@
 
 <body>
     <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <a class="navbar-brand" href="#">
-            <img src="../images/watches.jpg" />
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+            <a class="navbar-brand" href="#">
+                <img src="../images/watches.jpg" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav text-center font-weight-bold mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
-                </li>
-                {{-- <li class="nav-item">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav text-center font-weight-bold mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
+                    </li>
+                    {{-- <li class="nav-item">
                     <a class="nav-link" href="#">Sản Phẩm</a>
                 </li>
                 <li class="nav-item">
@@ -112,29 +112,29 @@
                 <li class="nav-item">
                     <a class="nav-link">Contact</a>
                 </li> --}}
-            </ul>
-            <div class="">
-                @if (Route::has('login'))
-                    @auth
-                        <ul  class="navbar-nav text-center font-weight-bold">
-                            <li class="nav-item bg-warning rounded-pill">
-                                <a class="nav-link" href="{{ url('/card') }}">
-                                    <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng
-                                </a>
-                            </li>
-                            <li  class="nav-item">
-                                <a class="nav-link" href="{{ url('/product') }}">Admin</a>
-                            </li>
-                           
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-    
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
+                </ul>
+                <div class="">
+                    @if (Route::has('login'))
+                        @auth
+                            <ul class="navbar-nav text-center font-weight-bold">
+                                <li class="nav-item bg-warning rounded-pill">
+                                    <a class="nav-link" href="{{ url('/card') }}">
+                                        <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/product') }}">Admin</a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::user()->name }}
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -151,6 +151,7 @@
                             <a href="{{ route('register') }}">Đăng ký</a>
                         @endif
                     @endauth
+>>>>>>> 92663aba7f41a603e3bb6a7f655d1d3a8c7b3213
 
                     @endif
                 </div>
