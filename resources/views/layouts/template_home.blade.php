@@ -73,7 +73,6 @@
     </style>
     <script>
         try {
-
             window.Laravel = {!! json_encode([
                 'csrfToken' => csrf_token(),
                 'access_token' => $accessToken,
@@ -100,10 +99,10 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav text-center font-weight-bold mr-auto">
-                    <li class="nav-item active">
+                    {{-- <li class="nav-item active">
                         <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
                     </li>
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                     <a class="nav-link" href="#">Sản Phẩm</a>
                 </li>
                 <li class="nav-item">
@@ -119,7 +118,8 @@
                             <ul class="navbar-nav text-center font-weight-bold">
                                 <li class="nav-item bg-warning rounded-pill">
                                     <a class="nav-link" href="{{ url('/card') }}">
-                                        <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng
+                                        <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng 
+                                  
                                     </a>
                                 </li>
                                 <li class="nav-item">
