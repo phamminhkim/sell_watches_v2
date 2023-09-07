@@ -25,4 +25,35 @@ class ShoppingCardController extends AuthUserController
 
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
+
+    public function store(Request $request)
+    {
+        $result['data'] = array();
+        $result['data']['success'] = 0;
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+
+
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required',
+            'quantity' => 'required',
+        ]);
+        $failed = $validator->fails();
+        $isErr = false;
+        $data = $request->all();
+        $user = Auth::user();
+      
+        if ($failed || $isErr) {
+            $result['data']['errors'] = $validator->errors();
+        } else {
+            try {
+                $shopping = $this->shopping->create($data, $user);
+                $result['data']['data'] = $shopping;
+                $result['data']['success'] = 1;
+            } catch (\Exception $e) {
+                $result['data']['errors'] = $e->getMessage();
+            }
+        }
+
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
 }

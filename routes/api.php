@@ -47,6 +47,8 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('list-color-delete/{id}', [ColorController::class, 'destroy']);
 
     Route::get('list-card', [ShoppingCardController::class, 'index']);
+    Route::post('add-card', [ShoppingCardController::class, 'store']);
+
 
 });
 Route::get('list-product-no-user', [ProductController::class, 'index']);

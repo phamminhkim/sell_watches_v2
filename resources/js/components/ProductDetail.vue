@@ -78,10 +78,11 @@
               <div class="info-content col-lg-10">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button style="outline: none; box-shadow: none;" type="button" class="btn border"
-                    @click="handDown">-</button>
-                  <input :value="count" style="width: 50px; text-align: center; outline: none;" class="border" />
+                    @click="handDown()">-</button>
+                  <input v-model="shopping_card.quantity" style="width: 50px; text-align: center; outline: none;"
+                    class="border" />
                   <button style="outline: none; box-shadow: none;" type="button" class="btn border"
-                    @click="handleUp">+</button>
+                    @click="handleUp()">+</button>
                 </div>
                 <span class="ml-3" style="font-size: .85rem; color: gray;">
                   {{ `${product_details.quantity || 0} sản phẩm có sẵn` }}
@@ -95,7 +96,7 @@
             <button type="button" class="btn">Thêm vào giỏ hàng</button>
           </div>
           <div class="buy-now-btn">
-            <button type="button" class="btn">Mua ngay</button>
+            <button @click="addCard()" type="button" class="btn">Mua ngay</button>
           </div>
         </div>
       </div>
@@ -110,13 +111,20 @@ export default {
   },
   data() {
     return {
-
+      token: "",
       page_url_product: "/api/product-detail",
+      page_url_add_card: "/api/add-card",
       product_details: {},
-      count: 1,
+      shopping_card: {
+        id: '',
+        user_id: '',
+        product_id: this.id,
+        quantity: '',
+      },
     }
   },
   created() {
+    this.token = "Bearer " + window.Laravel.access_token;
     this.fetchProductDetail();
   },
   methods: {
@@ -139,14 +147,53 @@ export default {
         });
     },
     handleUp() {
-      this.count++;
+      this.shopping_card.quantity++;
     },
     handDown() {
-      if (this.count > 1) {
-        this.count--;
+      if (this.shopping_card.quantity > 1) {
+        this.shopping_card.quantity--;
       }
+    },
+    hrefCard() {
+      window.location.href = '/card';
+    },
+    addCard() {
+      var page_url = this.page_url_add_card;
+      fetch(page_url, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.token
+        },
+        body: JSON.stringify(this.shopping_card)
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if (data.data.success == 1) {
+            // this.fetchProduct();
+            this.$bvToast.toast(`Thêm thành công`, {
+              title: 'Thông báo',
+              variant: 'success',
+              solid: true
+            })
+            this.hrefCard();
+          } else {
+            // this.errors = data.data.errors;
+            this.$bvToast.toast(`Thêm thất bại`, {
+              title: 'Thông báo',
+              variant: 'danger',
+              solid: true
+            })
+          }
+
+        })
+        .catch(err => {
+          console.log(err);
+
+        });
     }
-  },
+  }
 
 }
 </script>

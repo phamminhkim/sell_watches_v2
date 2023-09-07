@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\sell_watches\ShoppingCard;
+use App\Models\sell_watches\Product;
 
 class ShoppingCardRepository
 {
@@ -16,9 +17,33 @@ class ShoppingCardRepository
     {
         return ShoppingCard::find($id);
     }
-    public function create($data)
+    public function create($data, $user)
     {
-        return ShoppingCard::create($data);
+        $product = Product::where('id', $data['product_id'])->first();
+        if($product){
+            $price = $product->price;
+            $total_price = $price * $data['quantity'];
+            $check_product_id = ShoppingCard::where('product_id', $data['product_id'])->first();
+            if($check_product_id){
+                $quantity = $check_product_id->quantity;
+                $sum_quantity = $quantity + $data['quantity'];
+                $total_price = $price * $sum_quantity;
+                $check_product_id->update([
+                    'quantity' => $sum_quantity,
+                    'total_price' => $total_price,
+                ]);
+                return $check_product_id;
+            } else {
+                $re = ShoppingCard::create([
+                    'user_id' => $user->id,
+                    'product_id' => $data['product_id'],
+                    'quantity' => $data['quantity'],
+                    'total_price' => $total_price,
+                ]);
+                return $re;
+            }
+           
+        }
     }
     public function update($id, $data)
     {
