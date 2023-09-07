@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="col-lg-8">
-
+            kim
         </div>
        </div>
     </div>
