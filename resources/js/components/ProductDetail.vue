@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-4">
         <div class="form-group main_detail-img" v-for="(image, index) in product_details.images" :key="index">
-          <img :src="'../' + image.path" width="100%" height="100%" />
+          <img :src="'../' + image.path" />
         </div>
       </div>
       <div class="col-lg-8">
@@ -77,10 +77,15 @@
               </div>
               <div class="info-content col-lg-10">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" class="btn border">-</button>
-                  <input style="width: 50px; text-align: center;" class="border" />
-                  <button type="button" class="btn border">+</button>
+                  <button style="outline: none; box-shadow: none;" type="button" class="btn border"
+                    @click="handDown">-</button>
+                  <input :value="count" style="width: 50px; text-align: center; outline: none;" class="border" />
+                  <button style="outline: none; box-shadow: none;" type="button" class="btn border"
+                    @click="handleUp">+</button>
                 </div>
+                <span class="ml-3" style="font-size: .85rem; color: gray;">
+                  {{ `${product_details.quantity || 0} sản phẩm có sẵn` }}
+                </span>
               </div>
             </div>
           </div>
@@ -108,6 +113,7 @@ export default {
 
       page_url_product: "/api/product-detail",
       product_details: {},
+      count: 1,
     }
   },
   created() {
@@ -132,6 +138,14 @@ export default {
 
         });
     },
+    handleUp() {
+      this.count++;
+    },
+    handDown() {
+      if (this.count > 1) {
+        this.count--;
+      }
+    }
   },
 
 }
