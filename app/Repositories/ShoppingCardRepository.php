@@ -58,4 +58,9 @@ class ShoppingCardRepository
         return $ShoppingCard;
     }
 
+    public function count()
+    {
+        return ShoppingCard::count();
+    }
+
 }

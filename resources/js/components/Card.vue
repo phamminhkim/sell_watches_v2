@@ -42,8 +42,8 @@
         </div>
         <div class="form-group footer">
             <div class="float-left">
-                <button class="btn btn-sm btn-danger" @click="deleteSelecteds()"><i
-                        class="fa fa-trash mr-2"></i>Xóa</button>
+                <button class="btn btn-sm btn-info" @click="deleteSelecteds()"><i
+                        class="fa fa-trash mr-2"></i>Hủy chọn tất cả</button>
             </div>
             <div class="float-right">
                 <label class="text-secondary text-uppercase">Tổng thanh toán ({{ selecteds.length }} sản phẩm):
@@ -65,30 +65,41 @@ export default {
                 {
                     key: 'selected',
                     label: 'Chọn',
+                    class: 'text-center text-nowrap',
                 },
                 {
                     key: 'product_id',
                     label: 'Sản phẩm',
+                    class: 'text-nowrap',
                 },
                 {
                     key: 'price',
                     label: 'Đơn giá',
+                    class: 'text-nowrap',
+
                 },
                 {
                     key: 'quantity',
                     label: 'Số lượng',
+                    class: 'text-nowrap',
+
                 },
                 {
                     key: 'total_price',
                     label: 'Tổng tiền',
+                    class: 'text-nowrap',
+
                 },
                 {
                     key: 'action',
                     label: '',
+                    class: 'text-nowrap',
+
                 },
             ],
 
             page_url_card: '/api/list-card',
+            page_url_delete_card: '/api/delete-card',
         }
     },
     created() {
@@ -118,6 +129,43 @@ export default {
             formData.append('selecteds', JSON.stringify(this.selecteds));
             var params = new URLSearchParams(formData);
             window.location.href = '/card/buy-selecteds' + '?' + params.toString();
+        },
+        deleteSelecteds() {
+            this.selecteds = [];
+        },
+        deleteCard(id) {
+            var page_url = this.page_url_delete_card + '/' + id;
+            fetch(page_url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: this.token
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.data.success == 1) {
+                        this.$bvToast.toast(`Xóa thành công`, {
+                            title: 'Thông báo',
+                            variant: 'success',
+                            solid: true
+                        })
+                        this.fetchCard();
+                    } else {
+                        this.$bvToast.toast(`Xóa thất bại`, {
+                            title: 'Thông báo',
+                            variant: 'danger',
+                            solid: true
+                        })
+                    }
+
+
+                })
+                .catch(err => {
+                    console.log(err);
+
+                });
         }
     },
     computed: {
@@ -145,4 +193,5 @@ export default {
     width: 98%;
     padding: 10px;
     background-color: #fff;
-}</style>
+}
+</style>

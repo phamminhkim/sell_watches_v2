@@ -56,4 +56,15 @@ class ShoppingCardController extends AuthUserController
 
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
+
+    public function destroy($id){
+        $result['data'] = array();
+        $result['data']['success'] = 0;
+        $shopping = $this->shopping->delete($id);
+        $result['data']['data'] = $shopping;
+        $result['data']['success'] = 1;
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+  
+    
 }
