@@ -90,7 +90,7 @@
     <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
-            <img src="../images/logo.png" />
+            <img src="../images/watches.jpg" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,7 +102,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#">Sản Phẩm</a>
                 </li>
                 <li class="nav-item">
@@ -110,7 +110,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link">Contact</a>
-                </li>
+                </li> --}}
             </ul>
             <div class="">
                 @if (Route::has('login'))
