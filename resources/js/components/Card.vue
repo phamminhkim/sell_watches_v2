@@ -3,7 +3,7 @@
         <div class="form-group container">
             <b-table :items="cards" :fields="fields" responsive hover >
                 <template #cell(selected)="data">
-                    <input type="checkbox" v-model="selecteds" :value="data.item.id" />
+                    <input type="checkbox" v-model="selecteds" :value="data.item" />
                 </template>
                 <template #head(product_id)="label">
                     <span class="text-secondary"> {{ label.label }} </span>
@@ -43,7 +43,7 @@
                 <button class="btn btn-sm btn-danger" @click="deleteSelecteds()"><i class="fa fa-trash mr-2"></i>Xóa</button>
             </div>
             <div class="float-right">
-                <label>Tổng thanh toán ({{ selecteds.length }} sản phẩm)</label>
+                <label class="text-secondary text-uppercase">Tổng thanh toán ({{ selecteds.length }} sản phẩm): {{total_price}} đ</label>
                 <button class="btn btn-sm btn-primary" @click="buySelecteds()"><i class="fa fa-shopping-cart mr-2"></i>Mua</button>
             </div>
         </div>
@@ -107,6 +107,15 @@ export default {
                     console.log(err);
 
                 });
+        }
+    },
+    computed: {
+        total_price() {
+            var total_price = 0;
+            this.selecteds.forEach(item => {
+                total_price += item.total_price;
+            });
+            return total_price;
         }
     }
 }
