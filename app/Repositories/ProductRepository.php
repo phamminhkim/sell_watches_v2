@@ -8,10 +8,14 @@ use App\Models\sell_watches\Image;
 
 class ProductRepository
 {
-    public function getAll()
+    public function getAll($request)
     {
-
-        return Product::with(['images', 'brand', 'category', 'color'])->get();
+        $query = Product::with(['images', 'brand', 'category', 'color']);
+        if($request->filled('start_price') && $request->filled('end_price')){
+            $query->whereBetween('price', [$request->start_price, $request->end_price]);
+        }
+        $product = $query->get();
+        return $product;
     }
 
     public function getById($id)

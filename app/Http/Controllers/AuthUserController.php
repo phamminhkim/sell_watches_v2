@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthUserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $accessToken = null;
         $currentUser = null;
@@ -148,6 +148,31 @@ class AuthUserController extends Controller
         view()->share('accessToken', $accessToken);
         view()->share('currentUser', $currentUser);
         return view('product_detail', compact('id'));
+       
+    }
+
+    public function card()
+    {
+        $accessToken = null;
+        $currentUser = null;
+        
+        if (Auth::check()) {
+            $user = Auth::user();
+            
+            // Kiểm tra nếu user đã có accessToken
+            if ($user->accessToken) {
+                $accessToken = $user->accessToken;
+            } else {
+                $accessToken = $user->createToken('authToken')->accessToken;
+            }
+            
+            $currentUser = $user;
+        }
+    
+        
+        view()->share('accessToken', $accessToken);
+        view()->share('currentUser', $currentUser);
+        return view('card');
        
     }
 }

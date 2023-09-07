@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ShoppingCardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('list-color-update/{id}', [ColorController::class, 'update']);
     Route::delete('list-color-delete/{id}', [ColorController::class, 'destroy']);
 
+    Route::get('list-card', [ShoppingCardController::class, 'index']);
 
 });
 Route::get('list-product-no-user', [ProductController::class, 'index']);

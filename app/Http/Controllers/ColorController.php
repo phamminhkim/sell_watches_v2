@@ -16,7 +16,8 @@ class ColorController extends AuthUserController
     {
         $this->color = $colorRepository;
     }
-    public function index()
+    public function index(Request $request)
+
     {
         $color = $this->color->getAll();
         $result = array();

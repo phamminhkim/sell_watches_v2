@@ -16,6 +16,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/brand' ,'AuthUserController@brand');
     Route::get('/color' ,'AuthUserController@color');
     Route::get('/product' ,'AuthUserController@product');
+    Route::get('/card' ,'AuthUserController@card');
+
 });
 
 Auth::routes();

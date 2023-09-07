@@ -16,7 +16,7 @@ class CategoryController extends AuthUserController
     {
         $this->category = $categoryRepository;
     }
-    public function index()
+    public function index(Request $request)
     {
         $category = $this->category->getAll();
         $result = array();
