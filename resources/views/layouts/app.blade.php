@@ -84,7 +84,7 @@
     </style>
     <script>
         try {
-            console.log('window.Laravel'    )
+            console.log('window.Laravel')
             window.Laravel = {!! json_encode([
                 'csrfToken' => csrf_token(),
                 // 'access_token' => $accessToken,

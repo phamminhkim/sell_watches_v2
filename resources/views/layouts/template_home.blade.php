@@ -14,6 +14,9 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+
     <!-- Styles -->
     <style>
         html,
@@ -67,70 +70,68 @@
         .m-b-md {
             margin-bottom: 30px;
         }
-
-      
     </style>
-   <script>
-    try {
-       
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-            'access_token' => $accessToken,
-            'current_user' => Auth::user(),
-        ]) !!};
-        console.log('Laravel', window.Laravel); 
-    } catch (err) {
+    <script>
+        try {
 
-    }
-</script>
+            window.Laravel = {!! json_encode([
+                'csrfToken' => csrf_token(),
+                'access_token' => $accessToken,
+                'current_user' => Auth::user(),
+            ]) !!};
+            console.log('Laravel', window.Laravel);
+        } catch (err) {
+
+        }
+    </script>
 
 </head>
 
 <body>
     <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="../images/logo.png" />
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="../images/logo.png" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav text-center font-weight-bold mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sản Phẩm</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">Giới thiệu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">Contact</a>
-                </li>
-            </ul>
-            <div class="">
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                        <a href="{{ url('/setting') }}">Setting</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav text-center font-weight-bold mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sản Phẩm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Giới thiệu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                <div class="">
+                    @if (Route::has('login'))
+                        @auth
+                            <a href="{{ url('/home') }}">Home</a>
+                            <a href="{{ url('/setting') }}">Setting</a>
+                        @else
+                            <a href="{{ route('login') }}">Login</a>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}">Register</a>
+                            @endif
+                        @endauth
 
-                @endif
+                    @endif
+                </div>
             </div>
-        </div>
-    </nav>
-    <main class="py-4">
-        @yield('content')
-    </main>
+        </nav>
+        <main class="py-4 container-fluid">
+            @yield('content')
+        </main>
     </div>
 
     <script src="{{ mix('js/app.js') }}"></script>
