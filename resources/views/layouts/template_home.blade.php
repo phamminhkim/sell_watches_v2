@@ -90,7 +90,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="../images/watches.jpg" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -151,7 +151,7 @@
                             <a href="{{ route('register') }}">Đăng ký</a>
                         @endif
                     @endauth
->>>>>>> 92663aba7f41a603e3bb6a7f655d1d3a8c7b3213
+
 
                     @endif
                 </div>
