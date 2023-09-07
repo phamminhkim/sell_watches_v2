@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h4> Phạm Minh Kim </h4>
         <div class="container-fluid">
             <div class="form-group mt-2">
                 <div class="row">

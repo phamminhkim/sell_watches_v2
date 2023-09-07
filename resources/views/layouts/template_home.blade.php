@@ -88,7 +88,7 @@
 
 <body>
     <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <a class="navbar-brand" href="#">
             <img src="../images/watches.jpg" />
         </a>
@@ -117,7 +117,7 @@
                     @auth
                         <ul  class="navbar-nav text-center font-weight-bold">
                             <li  class="nav-item">
-                                <a class="nav-link" href="{{ url('/setting') }}">Admin</a>
+                                <a class="nav-link" href="{{ url('/product') }}">Admin</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
