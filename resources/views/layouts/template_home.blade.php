@@ -118,9 +118,9 @@
                         <a href="{{ url('/home') }}">Home</a>
                         <a href="{{ url('/setting') }}">Setting</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">Đăng nhập</a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">Đăng ký</a>
                         @endif
                     @endauth
 
