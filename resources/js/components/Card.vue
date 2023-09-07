@@ -142,6 +142,12 @@ export default {
           console.log(err);
 
         });
+    },
+    buySelecteds() {
+      const formData = new FormData();
+      formData.append('selecteds', JSON.stringify(this.selecteds));
+      var params = new URLSearchParams(formData);
+      window.location.href = '/card/buy-selecteds' + '?' + params.toString();
     }
   },
   computed: {
@@ -154,6 +160,7 @@ export default {
     }
   }
 }
+
 </script>
 <style lang="scss" scoped>
 .thumbnail-image {
