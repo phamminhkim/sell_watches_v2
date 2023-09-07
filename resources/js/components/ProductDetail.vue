@@ -177,6 +177,7 @@ export default {
               variant: 'success',
               solid: true
             })
+            this.hrefCard();
           } else {
             // this.errors = data.data.errors;
             this.$bvToast.toast(`Thêm thất bại`, {
