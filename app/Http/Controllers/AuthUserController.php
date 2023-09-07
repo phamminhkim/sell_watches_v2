@@ -150,4 +150,29 @@ class AuthUserController extends Controller
         return view('product_detail', compact('id'));
        
     }
+
+    public function card()
+    {
+        $accessToken = null;
+        $currentUser = null;
+        
+        if (Auth::check()) {
+            $user = Auth::user();
+            
+            // Kiểm tra nếu user đã có accessToken
+            if ($user->accessToken) {
+                $accessToken = $user->accessToken;
+            } else {
+                $accessToken = $user->createToken('authToken')->accessToken;
+            }
+            
+            $currentUser = $user;
+        }
+    
+        
+        view()->share('accessToken', $accessToken);
+        view()->share('currentUser', $currentUser);
+        return view('card');
+       
+    }
 }

@@ -116,9 +116,15 @@
                 @if (Route::has('login'))
                     @auth
                         <ul  class="navbar-nav text-center font-weight-bold">
+                            <li class="nav-item bg-warning rounded-pill">
+                                <a class="nav-link" href="{{ url('/card') }}">
+                                    <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng
+                                </a>
+                            </li>
                             <li  class="nav-item">
                                 <a class="nav-link" href="{{ url('/product') }}">Admin</a>
                             </li>
+                           
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
