@@ -89,43 +89,6 @@
 
 <body>
     <div id="app">
-<<<<<<< HEAD
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">
-                <img src="../images/logo.png" />
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav text-center font-weight-bold mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sản Phẩm</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Giới thiệu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Contact</a>
-                    </li>
-                </ul>
-                <div class="">
-                    @if (Route::has('login'))
-                        @auth
-                            <a href="{{ url('/home') }}">Home</a>
-                            <a href="{{ url('/setting') }}">Setting</a>
-                        @else
-                            <a href="{{ route('login') }}">Login</a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}">Register</a>
-                            @endif
-                        @endauth
-=======
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <a class="navbar-brand" href="#">
             <img src="../images/watches.jpg" />
@@ -188,23 +151,14 @@
                             <a href="{{ route('register') }}">Đăng ký</a>
                         @endif
                     @endauth
->>>>>>> 92663aba7f41a603e3bb6a7f655d1d3a8c7b3213
 
                     @endif
                 </div>
             </div>
-<<<<<<< HEAD
         </nav>
         <main class="py-4 container-fluid">
             @yield('content')
         </main>
-=======
-        </div>
-    </nav>
-    <main>
-        @yield('content')
-    </main>
->>>>>>> 92663aba7f41a603e3bb6a7f655d1d3a8c7b3213
     </div>
 
     <script src="{{ mix('js/app.js') }}"></script>
