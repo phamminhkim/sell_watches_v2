@@ -33,6 +33,7 @@
             </div>
           </div>
         </div>
+      <div class="table-responsive">
         <table class="table hover border-0">
           <thead>
             <tr style="font-weight: 600; background: rgba(116, 155, 194, .15);">
@@ -56,24 +57,32 @@
               <td> {{ buy.quantity }} </td>
               <td class="text-danger font-italic" style="font-size: 1rem;"> {{ buy.total_price }} đ</td>
             </tr>
-            <tr style="background: rgba(116, 155, 194, .15);">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="font-weight-light font-italic" style="color: gray; font-size: .9rem;">Tổng số tiền ({{
+            <!-- <tr style="background: rgba(116, 155, 194, .15);">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td> 
+            <td class="font-weight-light font-italic txt-total" style="color: gray; font-size: .9rem;">Tổng số
+              tiền ({{
                 buy_selecteds.length }} sản
-                phẩm):
-                <span class="text-danger font-weight-bold" style="font-size: 1rem;"> {{ total_price }} đ </span>
-              </td>
-            </tr>
+              phẩm):
+              <span class="text-danger font-weight-bold" style="font-size: 1rem;"> {{ total_price }} đ </span>
+            </td>
+          </tr> -->
           </tbody>
         </table>
-        <div class="form-group text-right">
-          <button type="submit" class="btn btn-warning py-2 px-4 font-weight-bold" style="color: white;">Đặt hàng</button>
-        </div>
+      </div>
+      <div class="form-group">
+        <span class="font-weight-light font-italic txt-total" style="color: gray; font-size: .9rem;">Tổng số
+          tiền ({{
+            buy_selecteds.length }} sản
+          phẩm):
+          <span class="text-danger font-weight-bold" style="font-size: 1rem;"> {{ total_price }} đ </span>
+        </span>
+        <button class="btn btn-warning py-2 px-4 font-weight-bold float-right" style="color: white;">Đặt hàng</button>
+      </div>
       </form>
-
+      </div>
     </div>
   </div>
 </template>
@@ -174,5 +183,17 @@ td {
   background: rgba(221, 230, 237, .25);
   border-radius: 10px;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.txt-total {
+  line-height: 45px;
+
+  @media screen and (max-width: 767px) {
+    font-size: .65rem !important;
+
+    span {
+      font-size: .85rem !important;
+    }
+  }
 }
 </style>
