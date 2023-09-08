@@ -79,7 +79,11 @@
 
         .active {
             color: #120000 !important;
-            background: #02e502;
+            background: rgba(157, 178, 191, .5) !important;
+        }
+
+        .main-content {
+            min-height: 85vh
         }
     </style>
     <script>
@@ -151,11 +155,11 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid">
-            <div class="row">
+        <div class="container-fluid mt-3">
+            <div class="row main-content">
                 <div class="left shadow bg-white">
                     <ul id="myMenu">
-                        <h6 class="font-weight-bold"> <i class="fa fa-list ml-2 mr-2"></i>>Danh sách Menu</h6>
+                        <h6 class="font-weight-bold"> <i class="fa fa-list ml-2 mr-2 mb-2"></i>Danh sách Menu</h6>
                         <li><a href="/category" class="menu-item p-2 mb-1 ">Danh mục sản phẩm</a></li>
                         <li><a href="/brand" class="menu-item p-2">Thương hiệu</a></li>
                         <li><a href="/color" class="menu-item p-2">Màu sản phẩm</a></li>
@@ -171,9 +175,9 @@
                 </div>
             </div>
         </div>
-       
-        </div>
-       
+
+    </div>
+
     </div>
     <script>
         let active = window.location.pathname;
