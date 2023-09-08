@@ -4,7 +4,7 @@
       <b-table :items="cards" :fields="fields" responsive hover>
         <template #cell(selected)="data">
           <div class="b-table">
-            <input type="checkbox" v-model="selecteds" :value="data.item" />
+            <input type="checkbox" v-model="selecteds" :value="data.item" style="transform:scale(2.1)" />
           </div>
         </template>
         <template #head(product_id)="label">
@@ -32,7 +32,13 @@
         <template #cell(quantity)="data">
           <div class="b-table">
             <span v-if="data.item.product_id">
+              <button @click="reduceQuantityShoppingCart(data.item.id)" type="button" class="btn btn-sm btn-outline-info">
+                <i class="fa fa-minus"></i>
+              </button>
               {{ data.item.quantity }}
+              <button @click="increasingQuantityShoppingCart(data.item.id)" type="button" class="btn btn-sm btn-outline-info">
+                <i class="fa fa-plus"></i>
+              </button>
             </span>
           </div>
         </template>
@@ -41,10 +47,11 @@
             <span class="text-secondary"> {{ label.label }} </span>
           </div>
         </template>
+
         <template #cell(total_price)="data">
           <div class="b-table">
             <span v-if="data.item.product_id">
-              {{ data.item.total_price }}
+              đ {{ data.item.total_price }}
             </span>
           </div>
         </template>
@@ -53,6 +60,7 @@
             <span class="text-secondary"> {{ label.label }} </span>
           </div>
         </template>
+      
         <template #cell(product_id)="data">
           <div class="d-flex flex-column align-items-center justify-content-center" style="height: 150px;"
             v-if="data.item.product_id">
@@ -95,30 +103,45 @@ export default {
         {
           key: 'selected',
           label: 'Chọn',
+          class: 'text-center text-nowrap',
         },
         {
           key: 'product_id',
           label: 'Sản phẩm',
+          class: 'text-center text-nowrap',
+
         },
         {
           key: 'price',
           label: 'Đơn giá',
+          class: 'text-center text-nowrap',
+        
         },
         {
           key: 'quantity',
           label: 'Số lượng',
+          class: 'text-center text-nowrap',
+        
         },
         {
           key: 'total_price',
           label: 'Tổng tiền',
+          class: 'text-center text-nowrap',
+
         },
         {
           key: 'action',
           label: '',
+          class: 'text-center text-nowrap',
+
         },
       ],
 
       page_url_card: '/api/list-card',
+      page_url_delete_card: '/api/delete-card',
+      page_url_increasing_quantity_shopping_cart: '/api/increasing-quantity-shopping',
+      page_url_reduce_quantity_shopping_cart: '/api/reduce-quantity-shopping',
+
     }
   },
   created() {
@@ -148,7 +171,101 @@ export default {
       formData.append('selecteds', JSON.stringify(this.selecteds));
       var params = new URLSearchParams(formData);
       window.location.href = '/card/buy-selecteds' + '?' + params.toString();
-    }
+    },
+    deleteSelecteds() {
+      this.selecteds = [];
+    },
+    deleteCard(id) {
+      var page_url = this.page_url_delete_card + '/' + id;
+      fetch(page_url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.token
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if (data.data.success == 1) {
+            this.$bvToast.toast(`Xóa thành công`, {
+              title: 'Thông báo',
+              variant: 'success',
+              solid: true
+            })
+            this.fetchCard();
+          } else {
+            this.$bvToast.toast(`Xóa thất bại`, {
+              title: 'Thông báo',
+              variant: 'danger',
+              solid: true
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    increasingQuantityShoppingCart(id) {
+      var page_url = this.page_url_increasing_quantity_shopping_cart + '/' + id;
+      fetch(page_url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.token
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data.success == 1) {
+            this.$bvToast.toast(`Cập nhật thành công`, {
+              title: 'Thông báo',
+              variant: 'success',
+              solid: true
+            })
+            this.fetchCard();
+          } else {
+            this.$bvToast.toast(`Cập nhật thất bại`, {
+              title: 'Thông báo',
+              variant: 'danger',
+              solid: true
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    reduceQuantityShoppingCart(id) {
+      var page_url = this.page_url_reduce_quantity_shopping_cart + '/' + id;
+      fetch(page_url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.token
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data.success == 1) {
+            this.$bvToast.toast(`Cập nhật thành công`, {
+              title: 'Thông báo',
+              variant: 'success',
+              solid: true
+            })
+            this.fetchCard();
+          } else {
+            this.$bvToast.toast(`Cập nhật thất bại`, {
+              title: 'Thông báo',
+              variant: 'danger',
+              solid: true
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
   },
   computed: {
     total_price() {
@@ -157,7 +274,8 @@ export default {
         total_price += item.total_price;
       });
       return total_price;
-    }
+    },
+    
   }
 }
 

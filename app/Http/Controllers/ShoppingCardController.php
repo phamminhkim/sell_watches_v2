@@ -65,6 +65,24 @@ class ShoppingCardController extends AuthUserController
         $result['data']['success'] = 1;
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
+
+    public function increasing_quantity_shoppingcard($id){
+        $result['data'] = array();
+        $result['data']['success'] = 0;
+        $shopping = $this->shopping->increasing_quantity_shoppingcard($id);
+        $result['data']['data'] = $shopping;
+        $result['data']['success'] = 1;
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function reduce_quantity_shoppingcard($id){
+        $result['data'] = array();
+        $result['data']['success'] = 0;
+        $shopping = $this->shopping->reduce_quantity_shoppingcard($id);
+        $result['data']['data'] = $shopping;
+        $result['data']['success'] = 1;
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
   
     
 }

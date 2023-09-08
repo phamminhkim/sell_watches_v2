@@ -49,6 +49,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('list-card', [ShoppingCardController::class, 'index']);
     Route::post('add-card', [ShoppingCardController::class, 'store']);
     Route::delete('delete-card/{id}', [ShoppingCardController::class, 'destroy']);
+    Route::patch('increasing-quantity-shopping/{id}', [ShoppingCardController::class, 'increasing_quantity_shoppingcard']);
+    Route::patch('reduce-quantity-shopping/{id}', [ShoppingCardController::class, 'reduce_quantity_shoppingcard']);
+
 
 
 });
