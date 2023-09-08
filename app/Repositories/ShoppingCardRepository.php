@@ -63,4 +63,40 @@ class ShoppingCardRepository
         return ShoppingCard::count();
     }
 
+    public function increasing_quantity_shoppingcard($id){
+        $shoppingcard = ShoppingCard::where('id', $id)->first();
+        if($shoppingcard){
+            $product = Product::where('id', $shoppingcard->product_id)->first();
+            if($product){
+                $price = $product->price;
+                $quantity = $shoppingcard->quantity;
+                $sum_quantity = $quantity + 1;
+                $total_price = $price * $sum_quantity;
+                $shoppingcard->update([
+                    'quantity' => $sum_quantity,
+                    'total_price' => $total_price,
+                ]);
+                return $shoppingcard;
+            }
+        }
+    }
+
+    public function reduce_quantity_shoppingcard($id){
+        $shoppingcard = ShoppingCard::where('id', $id)->first();
+        if($shoppingcard){
+            $product = Product::where('id', $shoppingcard->product_id)->first();
+            if($product){
+                $price = $product->price;
+                $quantity = $shoppingcard->quantity;
+                $sum_quantity = $quantity - 1;
+                $total_price = $price * $sum_quantity;
+                $shoppingcard->update([
+                    'quantity' => $sum_quantity,
+                    'total_price' => $total_price,
+                ]);
+                return $shoppingcard;
+            }
+        }
+    }
+
 }
