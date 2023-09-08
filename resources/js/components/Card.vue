@@ -224,12 +224,16 @@ export default {
               solid: true
             })
             this.fetchCard();
+            this.selecteds = [];
+
           } else {
             this.$bvToast.toast(`Cập nhật thất bại`, {
               title: 'Thông báo',
               variant: 'danger',
               solid: true
             })
+            this.selecteds = [];
+
           }
         })
         .catch(err => {
@@ -254,12 +258,15 @@ export default {
               solid: true
             })
             this.fetchCard();
+            this.selecteds = [];
           } else {
             this.$bvToast.toast(`Cập nhật thất bại`, {
               title: 'Thông báo',
               variant: 'danger',
               solid: true
             })
+            this.selecteds = [];
+
           }
         })
         .catch(err => {

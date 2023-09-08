@@ -13,7 +13,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="icon" href="./images/watches.jpg" type="image/x-icon">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
 
@@ -116,10 +116,9 @@
                     @if (Route::has('login'))
                         @auth
                             <ul class="navbar-nav text-center font-weight-bold">
-                                <li class="nav-item bg-warning rounded-pill px-4">
+                                <li class="nav-item text-uppercase px-4">
                                     <a class="nav-link" href="{{ url('/card') }}">
                                         <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng 
-                                  
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -137,6 +136,9 @@
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
+                                    </a>
+                                    <a class="dropdown-item"  href="{{ url('/order') }}">
+                                        Đơn mua
                                     </a>
     
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

@@ -28,6 +28,7 @@ Vue.component('product-list', require('./components/Product.vue').default);
 Vue.component('product-detail', require('./components/ProductDetail.vue').default);
 Vue.component('user-card', require('./components/Card.vue').default);
 Vue.component('user-card-buy', require('./components/BuySelected.vue').default);
+Vue.component('order-home', require('./components/Order.vue').default);
 
 
 const app = new Vue({

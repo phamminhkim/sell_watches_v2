@@ -14,7 +14,7 @@ class OrderRepository
     public function getAll()
     {
         
-        return Order::all();
+        return Order::with(['order_details.product.images'])->get();
     }
 
     public function getById($id)
