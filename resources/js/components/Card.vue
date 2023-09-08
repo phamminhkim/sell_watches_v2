@@ -75,7 +75,7 @@
       <div class="float-left">
         <button class="btn btn-sm btn-danger" @click="deleteSelecteds()"><i class="fa fa-trash mr-2"></i>Xóa</button>
       </div>
-      <div class="float-right">
+      <div class="float-right buy-txt">
         <label class="text-secondary text-uppercase">Tổng thanh toán ({{ selecteds.length }} sản phẩm): {{ total_price }}
           đ</label>
         <button class="btn btn-sm btn-primary" @click="buySelecteds()"><i
@@ -183,5 +183,21 @@ export default {
   width: 98%;
   padding: 10px;
   background-color: #fff;
+
+  @media screen and (max-width: 1023px) {
+    float: left;
+
+    .buy-txt {
+      label {
+        display: block;
+        font-size: .75rem;
+        font-style: italic;
+      }
+
+      button {
+        float: right;
+      }
+    }
+  }
 }
 </style>

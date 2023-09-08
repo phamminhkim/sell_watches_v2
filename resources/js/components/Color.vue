@@ -26,9 +26,9 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="bg-white">
-            <b-table striped hover small :bordered="true" :items="colors" :fields="fields" :filter="filter"
-              :current-page="current_page" :per-page="per_page">
+          <div class="bg-white p-3">
+            <b-table responsive="sm" striped hover small :bordered="true" :items="colors" :fields="fields"
+              :filter="filter" :current-page="current_page" :per-page="per_page">
               <template #cell(index)="data">
                 {{ data.index + 1 }}
               </template>

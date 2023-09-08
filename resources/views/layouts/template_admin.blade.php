@@ -168,7 +168,7 @@
 
                     </ul>
                 </div>
-                <div class="right" style="background-color: rgb(221 221 221 / 12%);">
+                <div class="right container" style="background-color: rgb(221 221 221 / 12%);">
                     <main class="py-4">
                         @yield('content')
                     </main>
