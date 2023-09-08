@@ -4,26 +4,42 @@
             <div class="form-group row">
                 <div class="col-lg-3 shadow">
                     <div class="form-group ">
-                        <h5 class="text-center font-weight-bold p-3 text-uppercase">Bộ lọc</h5>
+                        <h5 class="text-center font-weight-bold p-3 text-uppercase">
+                            <i class="fa fa-filter mr-2"></i>Bộ lọc
+                        </h5>
                     </div>
                     <div class="form-group">
-                        <label class="text-secondary font-weight-bold" for="">Giá bắt đầu</label>
-                        <input type="number" class="form-control" v-model="filter.start_price" />
+                        <p  class="text-secondary font-weight-bold border-bottom"><i class="fa fa-venus-double mr-2"></i>Giới tính</p>
+                        <div class="form-group" v-for="(gender, index) in genders" :key="index">
+                            <label>
+                                <input @change="fetchProduct()" type="radio" v-model="filter.gender" :value="gender.value" /> {{ gender.name }}
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="text-secondary font-weight-bold" for="">Giá kết thúc</label>
-                        <input type="number" class="form-control" v-model="filter.end_price" />
+                    <p class="text-secondary font-weight-bold border-bottom"><i class="fa fa-dollar mr-2"></i>Giá tiền</p>
+                    <div class="form-group d-flex text-nowrap align-items-center">
+                        <label class="mr-2" for="">Giá bắt đầu:</label>
+                        <input type="number" placeholder="nhập giá tiền..." class="form-control" v-model="filter.start_price" />
                     </div>
-                    <div class="form-group text-right">
-                        <button class="btn btn-sm btn-warning" @click="fetchProduct()">
-                            <i class="fa fa-search mr-2"></i>Tìm kiếm
-                        </button>
-                        <button class="btn btn-sm btn-info" @click="resetFilter()">
+                    <div class="form-group d-flex text-nowrap align-items-center">
+                        <label class="mr-2" for="">Giá kết thúc:</label>
+                        <input type="number"  placeholder="nhập giá tiền..." class="form-control" v-model="filter.end_price" />
+                    </div>
+                    <div class="form-group d-flex justify-content-between">
+                     
+                        <button class="btn btn-sm px-4 py-2 bg-white border rounded-pill" @click="resetFilter()">
                             <i class="fa fa-refresh mr-2"></i>Làm mới
+                        </button>
+                        <button class="btn btn-sm px-4 py-2 bg-white border rounded-pill" @click="fetchProduct()">
+                            <i class="fa fa-search mr-2"></i>Tìm kiếm
                         </button>
                     </div>
                 </div>
                 <div class="col-lg-9">
+                    <div class="form-group">
+                        <img class="img-banner" src="images/banner_w.jpg" />
+                    </div>
+                    <label class="font-italic text-secondary">Hiển thị {{ products.length }} kết quả  </label>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-3 mb-3" v-for="product in products" :key="product.id">
@@ -43,8 +59,8 @@
                                         </p>
                                         <p class="p-0 text-center text-secondary mb-5">Giá tiền: {{ product.price }} đ </p>
                                     </div>
-                                    <div class="card-footer w-100 bg-white border-0" style="position: absolute;bottom: 0;">
-                                        <button @click="detailProduct(product.id)" class="btn btn-sm btn-warning"><i class="fa fa-cart-plus mr-2"></i>Mua</button>
+                                    <div class="card-footer w-100 bg-white border-0 text-center" style="position: absolute;bottom: 0;">
+                                        <button @click="detailProduct(product.id)" class="btn btn-sm btn-danger py-2 px-4 rounded-pill"><i class="fa fa-cart-plus mr-2"></i>BUY NOW</button>
                                     </div>
                                 </div>
                             </div>
@@ -65,9 +81,24 @@ export default {
             token: "",
             current_user: window.Laravel.current_user,
             loading: false,
+            genders: [
+                {
+                    value: 'male',
+                    name: "Nam"
+                },
+                {
+                    value: 'female',
+                    name: "Nữ"
+                },
+                {
+                    value: 'male-female',
+                    name: "Cặp đôi"
+                }
+            ],
             filter: {
                 start_price: '',
                 end_price: '',
+                gender: ''
             },
 
             products: [],
@@ -84,6 +115,7 @@ export default {
             const params = new URLSearchParams({
                 start_price: this.filter.start_price,
                 end_price: this.filter.end_price,
+                gender: this.filter.gender
             });
             var page_url = this.page_url_product + '?' + params.toString();
             fetch(page_url, {
@@ -108,6 +140,7 @@ export default {
         resetFilter(){
             this.filter.start_price = '';
             this.filter.end_price = '';
+            this.filter.gender = '';
             this.fetchProduct();
         }
     }
@@ -118,5 +151,10 @@ export default {
     width: 100%;
     height: 150px;
     object-fit: contain; /* Đảm bảo tỷ lệ khung hình được duy trì */
+}
+.img-banner{
+    width: 100%;
+    object-fit: cover;
+    border-radius: 4px;
 }
 </style>

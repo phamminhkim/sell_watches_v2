@@ -14,6 +14,9 @@ class ProductRepository
         if($request->filled('start_price') && $request->filled('end_price')){
             $query->whereBetween('price', [$request->start_price, $request->end_price]);
         }
+        if($request->filled('gender')){
+            $query->where('gender',  $request->gender);
+        }
         $product = $query->get();
         return $product;
     }
