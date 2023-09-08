@@ -116,7 +116,7 @@
                     @if (Route::has('login'))
                         @auth
                             <ul class="navbar-nav text-center font-weight-bold">
-                                <li class="nav-item bg-warning rounded-pill">
+                                <li class="nav-item bg-warning rounded-pill px-4">
                                     <a class="nav-link" href="{{ url('/card') }}">
                                         <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng 
                                   
