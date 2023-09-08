@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShoppingCardController;
 
 /*
@@ -52,6 +53,8 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('increasing-quantity-shopping/{id}', [ShoppingCardController::class, 'increasing_quantity_shoppingcard']);
     Route::patch('reduce-quantity-shopping/{id}', [ShoppingCardController::class, 'reduce_quantity_shoppingcard']);
 
+    Route::get('list-order', [OrderController::class, 'index']);
+    Route::post('order-store', [OrderController::class, 'store']);
 
 
 });

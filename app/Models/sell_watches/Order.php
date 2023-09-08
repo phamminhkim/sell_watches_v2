@@ -9,9 +9,6 @@ class Order extends Model
 {
     protected $fillable = [
         "user_id",
-        "product_id",
-        "quantity",
-        "total_price",
         "order_date",
         "shipping_address",
         "payment_method",
@@ -21,10 +18,5 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function product()
-    {
-        return $this->hasOne(Product::class);
     }
 }
