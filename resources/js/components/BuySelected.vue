@@ -33,31 +33,32 @@
             </div>
           </div>
         </div>
-      <div class="table-responsive">
-        <table class="table hover border-0">
-          <thead>
-            <tr style="font-weight: 600; background: rgba(116, 155, 194, .15);">
-              <td>Hình ảnh</td>
-              <td>Sản phẩm</td>
-              <td>Đơn giá</td>
-              <td>Số lượng</td>
-              <td>Thành tiền</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(buy, index) in buy_selecteds" :key="index"
-              :style="{ background: index % 2 !== 0 ? 'rgba(238, 238, 238, .35)' : 'rgba(240, 240, 240, .75)' }">
-              <td v-if="buy.product_id" class=" d-flex justify-content-center">
-                <div class="thumbnail-image" v-if="buy.product.images.length > 0" v-for="image in buy.product.images">
-                  <img :src="'../' + image.path" width="100%" height="100%" />
-                </div>
-              </td>
-              <td v-if="buy.product_id"> {{ buy.product.name }} </td>
-              <td v-if="buy.product_id"> {{ buy.product.price }} </td>
-              <td> {{ buy.quantity }} </td>
-              <td class="text-danger font-italic" style="font-size: 1rem;"> {{ buy.total_price }} đ</td>
-            </tr>
-            <!-- <tr style="background: rgba(116, 155, 194, .15);">
+        <div class="table-responsive">
+          <table class="table hover border-0">
+            <thead>
+              <tr style="font-weight: 600; background: rgba(116, 155, 194, .15);">
+                <td>Hình ảnh</td>
+                <td>Sản phẩm</td>
+                <td>Đơn giá</td>
+                <td>Số lượng</td>
+                <td>Thành tiền</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(buy, index) in buy_selecteds" :key="index"
+                :style="{ background: index % 2 !== 0 ? 'rgba(238, 238, 238, .35)' : 'rgba(240, 240, 240, .75)' }">
+                <td v-if="buy.product_id" class=" d-flex justify-content-center">
+                  <div class="thumbnail-image" v-if="buy.product.images.length > 0 && index === 0"
+                    v-for="(image, index) in buy.product.images">
+                    <img :src="'../' + image.path" width="100%" height="100%" />
+                  </div>
+                </td>
+                <td v-if="buy.product_id"> {{ buy.product.name }} </td>
+                <td v-if="buy.product_id"> {{ buy.product.price }} </td>
+                <td> {{ buy.quantity }} </td>
+                <td class="text-danger font-italic" style="font-size: 1rem;"> {{ buy.total_price }} đ</td>
+              </tr>
+              <!-- <tr style="background: rgba(116, 155, 194, .15);">
             <td></td>
             <td></td>
             <td></td>
@@ -69,22 +70,22 @@
               <span class="text-danger font-weight-bold" style="font-size: 1rem;"> {{ total_price }} đ </span>
             </td>
           </tr> -->
-          </tbody>
-        </table>
-      </div>
-      <div class="form-group">
-        <span class="font-weight-light font-italic txt-total" style="color: gray; font-size: .9rem;">Tổng số
-          tiền ({{
-            buy_selecteds.length }} sản
-          phẩm):
-          <span class="text-danger font-weight-bold" style="font-size: 1rem;"> {{ total_price }} đ </span>
-        </span>
-        <button class="btn btn-warning py-2 px-4 font-weight-bold float-right" style="color: white;">Đặt hàng</button>
-      </div>
+            </tbody>
+          </table>
+        </div>
+        <div class="form-group">
+          <span class="font-weight-light font-italic txt-total" style="color: gray; font-size: .9rem;">Tổng số
+            tiền ({{
+              buy_selecteds.length }} sản
+            phẩm):
+            <span class="text-danger font-weight-bold" style="font-size: 1rem;"> {{ total_price }} đ </span>
+          </span>
+          <button class="btn btn-warning py-2 px-4 font-weight-bold float-right" style="color: white;"
+            :disabled="btn_order">Đặt hàng</button>
+        </div>
       </form>
-      </div>
     </div>
-
+  </div>
 </template>
 <script>
 export default {
@@ -106,6 +107,7 @@ export default {
       },
 
       page_url_store_order: '/api/order-store',
+      btn_order: this.buy_selecteds.length === 0 ? true : false,
 
     }
   },

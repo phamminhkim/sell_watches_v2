@@ -9763,6 +9763,22 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
+.main_detail .carousel {
+  display: flex;
+  width: 350px;
+  height: 80px;
+}
+
+.main_detail .carousel .crsel-item {
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
+}
+
+.main_detail .carousel .crsel-item:hover {
+  cursor: pointer !important;
+}
+
 .main_detail-img {
   width: 350px;
   height: 400px;
