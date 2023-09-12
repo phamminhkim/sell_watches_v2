@@ -166,6 +166,7 @@
                         <li><a href="/brand" class="menu-item p-2">Thương hiệu</a></li>
                         <li><a href="/color" class="menu-item p-2">Màu sản phẩm</a></li>
                         <li><a href="/product" class="menu-item p-2">Sản phẩm</a></li>
+                        <li><a href="/orders" class="menu-item p-2">Quản lí đơn hàng</a></li>
 
 
                     </ul>

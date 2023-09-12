@@ -159,9 +159,11 @@
                                         <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/product') }}">Admin</a>
-                                </li> --}}
+                                @if (Auth::user()->role === 'admin')
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('/product') }}">Dashboard</a>
+                                    </li>
+                                @endif
 
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -180,7 +182,8 @@
                                             {{ __('Logout') }}
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
                                             @csrf
                                         </form>
                                     </div>
