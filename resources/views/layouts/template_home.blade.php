@@ -15,9 +15,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="./images/watches.jpg" type="image/x-icon">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
     <!-- Styles -->
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <style>
         html,
         body {
@@ -70,6 +71,35 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+
+        .nav-submenu {
+            list-style: none;
+            position: absolute;
+            visibility: hidden;
+            width: 200px;
+        }
+
+        .nav-submenu>li>.nav-submenu-item {
+            color: #636b6f;
+            font-size: .85rem;
+            text-decoration: none
+        }
+
+        .nav-submenu>li>.nav-submenu-item:hover {
+            color: #000;
+        }
+
+        .nav-item {
+            text-align: start;
+            cursor: pointer;
+        }
+
+        /* @media screen and (min-width: 1023px) { */
+        .nav-item:hover>.nav-submenu {
+            visibility: visible !important;
+        }
+
+        /* } */
     </style>
     <script>
         try {
@@ -99,13 +129,21 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav text-center font-weight-bold mr-auto">
-                    {{-- <li class="nav-item active">
-                        <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Trang chủ <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Sản Phẩm</a>
-                </li>
-                <li class="nav-item">
+                    <li class="nav-item position-relative">
+                        <span class="nav-link">Sản Phẩm</span>
+                        <ul class="nav-submenu p-0">
+                            <li>
+                                <a class="nav-submenu-item" href="#">Dành cho nam</a>
+                            </li>
+                            <li class="float-left">
+                                <a class="nav-submenu-item" href="#">Dành cho nữ</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- <li class="nav-item">
                     <a class="nav-link">Giới thiệu</a>
                 </li>
                 <li class="nav-item">
@@ -118,12 +156,14 @@
                             <ul class="navbar-nav text-center font-weight-bold">
                                 <li class="nav-item text-uppercase px-4">
                                     <a class="nav-link" href="{{ url('/card') }}">
-                                        <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng 
+                                        <i class="fa fa-shopping-cart mr-2"></i>Giỏ hàng
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/product') }}">Admin</a>
-                                </li>
+                                @if (Auth::user()->role === 'admin')
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('/product') }}">Dashboard</a>
+                                    </li>
+                                @endif
 
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -132,27 +172,29 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ url('/order') }}">
+                                            Đơn hàng
+                                        </a>
+
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <a class="dropdown-item"  href="{{ url('/order') }}">
-                                        Đơn mua
-                                    </a>
-    
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
-                    @else
-                        <a href="{{ route('login') }}">Đăng nhập</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Đăng ký</a>
-                        @endif
-                    @endauth
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </li>
+                            </ul>
+                        @else
+                            <a href="{{ route('login') }}">Đăng nhập</a>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}">Đăng ký</a>
+                            @endif
+                        @endauth
 
 
                     @endif

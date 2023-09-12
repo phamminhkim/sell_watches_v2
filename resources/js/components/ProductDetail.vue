@@ -2,8 +2,13 @@
   <div class="main_detail">
     <div class="row">
       <div class="col-lg-4">
-        <div class="form-group main_detail-img" v-for="(image, index) in product_details.images" :key="index">
-          <img :src="'../' + image.path" />
+        <div class="form-group main_detail-img">
+          <img :src="(img_path === '') ? '../' + this?.product_details?.images[0]?.path : '../' + img_path" />
+        </div>
+        <div class="carousel clearfix" data-flickity='{ "groupCells": auto, "contain": true, "pageDots": false }'>
+          <div class="crsel-item" v-for="(image, index) in product_details.images" :key="index" @click="handleImg(index)">
+            <img :src="'../' + image.path" width="100%" height="100%" alt="">
+          </div>
         </div>
       </div>
       <div class="col-lg-8">
@@ -119,8 +124,9 @@ export default {
         id: '',
         user_id: '',
         product_id: this.id,
-        quantity: '',
+        quantity: 1,
       },
+      img_path: '',
     }
   },
   created() {
@@ -146,8 +152,13 @@ export default {
 
         });
     },
+    handleImg(index) {
+      this.img_path = this.product_details.images[index].path;
+    },
     handleUp() {
-      this.shopping_card.quantity++;
+      if (this.shopping_card.quantity < this.product_details.quantity) {
+        this.shopping_card.quantity++;
+      }
     },
     handDown() {
       if (this.shopping_card.quantity > 1) {
@@ -192,7 +203,7 @@ export default {
           console.log(err);
 
         });
-    }
+    },
   }
 
 }

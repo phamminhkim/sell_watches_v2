@@ -25,6 +25,7 @@ Vue.component('category-list', require('./components/Category.vue').default);
 Vue.component('brand-list', require('./components/Brand.vue').default);
 Vue.component('color-list', require('./components/Color.vue').default);
 Vue.component('product-list', require('./components/Product.vue').default);
+Vue.component('order-list', require('./components/OrderList.vue').default);
 Vue.component('product-detail', require('./components/ProductDetail.vue').default);
 Vue.component('user-card', require('./components/Card.vue').default);
 Vue.component('user-card-buy', require('./components/BuySelected.vue').default);
@@ -32,5 +33,5 @@ Vue.component('order-home', require('./components/Order.vue').default);
 
 
 const app = new Vue({
-    el: '#app',
+  el: '#app',
 });

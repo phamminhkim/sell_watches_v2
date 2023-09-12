@@ -43,7 +43,8 @@
                 <i class="fa fa-minus"></i>
               </button>
               {{ data.item.quantity }}
-              <button @click="increasingQuantityShoppingCart(data.item.id)" type="button" class="btn btn-sm btn-outline-info border">
+              <button @click="increasingQuantityShoppingCart(data.item.id)" type="button"
+                class="btn btn-sm btn-outline-info">
                 <i class="fa fa-plus"></i>
               </button>
             </span>
@@ -67,12 +68,12 @@
             <span class="text-secondary"> {{ label.label }} </span>
           </div>
         </template>
-      
+
         <template #cell(product_id)="data">
           <div class="d-flex flex-column align-items-center justify-content-center" style="height: 150px;"
             v-if="data.item.product_id">
-            <div class="float-left mr-2 thumbnail-image" v-if="data.item.product.images.length > 0"
-              v-for="image in data.item.product.images">
+            <div class="float-left mr-2 thumbnail-image" v-if="data.item.product.images.length > 0 && index === 0"
+              v-for="(image, index) in data.item.product.images" :key="index">
               <img :src="image.path" width="100%" height="100%" />
             </div>
             <span class="mt-2" style="font-size: 1rem; font-weight: 400;">{{ data.item.product.name }}</span>
@@ -93,8 +94,8 @@
       <div class="float-right buy-txt">
         <label class="text-secondary text-uppercase">Tổng thanh toán ({{ selecteds.length }} sản phẩm): {{ total_price }}
           đ</label>
-        <button class="btn btn-sm btn-primary" @click="buySelecteds()"><i
-            class="fa fa-shopping-cart mr-2"></i>Mua</button>
+        <button class="btn btn-sm btn-primary" @click="buySelecteds()"
+          :disabled="selecteds.length === 0 ? true : false"><i class="fa fa-shopping-cart mr-2"></i>Mua</button>
       </div>
     </div>
   </div>
@@ -122,13 +123,13 @@ export default {
           key: 'price',
           label: 'Đơn giá',
           class: 'text-center text-nowrap',
-        
+
         },
         {
           key: 'quantity',
           label: 'Số lượng',
           class: 'text-center text-nowrap',
-        
+
         },
         {
           key: 'total_price',
@@ -195,18 +196,18 @@ export default {
         .then(data => {
           console.log(data);
           if (data.data.success == 1) {
-            this.$bvToast.toast(`Xóa thành công`, {
-              title: 'Thông báo',
-              variant: 'success',
-              solid: true
-            })
+            // this.$bvToast.toast(`Xóa thành công`, {
+            //   title: 'Thông báo',
+            //   variant: 'success',
+            //   solid: true
+            // })
             this.fetchCard();
           } else {
-            this.$bvToast.toast(`Xóa thất bại`, {
-              title: 'Thông báo',
-              variant: 'danger',
-              solid: true
-            })
+            // this.$bvToast.toast(`Xóa thất bại`, {
+            //   title: 'Thông báo',
+            //   variant: 'danger',
+            //   solid: true
+            // })
           }
         })
         .catch(err => {
@@ -225,20 +226,20 @@ export default {
         .then(res => res.json())
         .then(data => {
           if (data.data.success == 1) {
-            this.$bvToast.toast(`Cập nhật thành công`, {
-              title: 'Thông báo',
-              variant: 'success',
-              solid: true
-            })
+            // this.$bvToast.toast(`Cập nhật thành công`, {
+            //   title: 'Thông báo',
+            //   variant: 'success',
+            //   solid: true
+            // })
             this.fetchCard();
             this.selecteds = [];
 
           } else {
-            this.$bvToast.toast(`Cập nhật thất bại`, {
-              title: 'Thông báo',
-              variant: 'danger',
-              solid: true
-            })
+            // this.$bvToast.toast(`Cập nhật thất bại`, {
+            //   title: 'Thông báo',
+            //   variant: 'danger',
+            //   solid: true
+            // })
             this.selecteds = [];
 
           }
@@ -259,19 +260,19 @@ export default {
         .then(res => res.json())
         .then(data => {
           if (data.data.success == 1) {
-            this.$bvToast.toast(`Cập nhật thành công`, {
-              title: 'Thông báo',
-              variant: 'success',
-              solid: true
-            })
+            // this.$bvToast.toast(`Cập nhật thành công`, {
+            //   title: 'Thông báo',
+            //   variant: 'success',
+            //   solid: true
+            // })
             this.fetchCard();
             this.selecteds = [];
           } else {
-            this.$bvToast.toast(`Cập nhật thất bại`, {
-              title: 'Thông báo',
-              variant: 'danger',
-              solid: true
-            })
+            // this.$bvToast.toast(`Cập nhật thất bại`, {
+            //   title: 'Thông báo',
+            //   variant: 'danger',
+            //   solid: true
+            // })
             this.selecteds = [];
 
           }
@@ -292,7 +293,7 @@ export default {
       });
       return total_price;
     },
-    
+
   }
 }
 
