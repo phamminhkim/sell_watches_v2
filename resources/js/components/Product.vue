@@ -41,7 +41,7 @@
               <template #cell(brand_id)="data">
                 <span v-if="data.item.brand_id"> {{ data.item.brand.name }} </span>
               </template>
-              <template #cell(color)="data">
+              <template #cell(color_id)="data">
                 <span v-if="data.item.color_id"> {{ data.item.color.name }} </span>
               </template>
               <template #cell(category_id)="data">

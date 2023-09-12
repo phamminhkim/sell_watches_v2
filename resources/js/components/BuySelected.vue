@@ -1,9 +1,10 @@
 <template>
   <div class="main-select">
+    <button @click="hrefCard()" type="button" class="btn btn-sm btn-outline-secondary px-4 ml-2 border"><i class="fa fa-arrow-left"></i></button>
     <div class="form-group container">
       <form @submit.prevent="addOrder()">
         <div class="order-input mb-5">
-          <h4>Thông tin đặt hàng</h4>
+         <h4 class="font-weigt-bold text-uppercase">Thông tin đặt hàng</h4>
           <div class="order-list px-3">
             <div class="order-item row">
               <span class="col-lg-3">
@@ -132,6 +133,7 @@ export default {
               variant: 'success',
               solid: true
             })
+            window.location.href = '/order';
           } else {
             this.errors = data.data.errors;
             this.$bvToast.toast(`Thêm thất bại`, {
@@ -147,6 +149,9 @@ export default {
 
         });
     },
+    hrefCard(){
+      window.location.href = '/card';
+    }
   },
   computed: {
     total_price() {

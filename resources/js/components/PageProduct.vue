@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-3 mb-3" v-for="product in products" :key="product.id">
-                                <div class="card bg-white shadown-lg w-100 h-100 shadow border-0 mt-1">
+                                <div class="card bg-white w-100 h-100  border-0 mt-1">
                                     <div class="card-header bg-transparent border-0">
                                         <div v-for="(image, index) in product.images">
                                             <img :src="image.path" class="thumbnail-image" />

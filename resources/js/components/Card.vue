@@ -1,7 +1,11 @@
 <template>
   <div>
+    <div class="form-group">
+    <button @click="hrefDefault()" type="button" class="btn btn-sm btn-outline-secondary px-4 ml-2 border"><i class="fa fa-arrow-left"></i></button>
+
+    </div>
     <div class="form-group container">
-      <b-table :items="cards" :fields="fields" responsive hover>
+      <b-table :items="cards" :fields="fields" responsive small :borderless="true">
         <template #cell(selected)="data">
           <div class="b-table">
             <input type="checkbox" v-model="selecteds" :value="data.item" style="transform:scale(2.1)" />
@@ -11,6 +15,9 @@
           <div class="b-table" style="height: auto;">
             <span class="text-secondary"> {{ label.label }} </span>
           </div>
+        </template>
+        <template #head(selected)="label">
+          <span class="text-secondary"> {{ label.label }} </span>
         </template>
         <template #head(index)="label">
           <div class="b-table" style="height: auto;">
@@ -32,11 +39,11 @@
         <template #cell(quantity)="data">
           <div class="b-table">
             <span v-if="data.item.product_id">
-              <button @click="reduceQuantityShoppingCart(data.item.id)" type="button" class="btn btn-sm btn-outline-info">
+              <button @click="reduceQuantityShoppingCart(data.item.id)" type="button" class="btn btn-sm btn-outline-info border">
                 <i class="fa fa-minus"></i>
               </button>
               {{ data.item.quantity }}
-              <button @click="increasingQuantityShoppingCart(data.item.id)" type="button" class="btn btn-sm btn-outline-info">
+              <button @click="increasingQuantityShoppingCart(data.item.id)" type="button" class="btn btn-sm btn-outline-info border">
                 <i class="fa fa-plus"></i>
               </button>
             </span>
@@ -273,6 +280,9 @@ export default {
           console.log(err);
         });
     },
+    hrefDefault(){
+      window.location.href = '/';
+    }
   },
   computed: {
     total_price() {

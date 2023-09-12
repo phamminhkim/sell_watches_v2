@@ -65,7 +65,7 @@ class ProductRepository
             }
             $images = $data['images'];
             foreach ($images as $image) {
-                if ($image['id'] == null) {
+                if (!isset($image['id'])) {
                     $randomName = uniqid();
                     $imagePath = 'images/' . $randomName;
                     $imageExtension = pathinfo($image['name'], PATHINFO_EXTENSION); // Lấy đuôi tệp từ tên gốc
