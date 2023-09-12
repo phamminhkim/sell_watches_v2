@@ -32,27 +32,35 @@
               <template #cell(index)="data">
                 {{ data.index + 1 }}
               </template>
-              <template #cell(name)="data">
-                <span v-if="data.item.images.length > 0">
-                  <b-avatar :src="data.item.images[0].path" alt="Ảnh sản phẩm" loading="lazy"> </b-avatar>
-                </span>
-                <span>{{ data.item.name }} </span>
+              
+              <template #cell(user_id)="data">
+                <span v-if="data.item.user_id" > {{ data.item.user.name }} </span>
               </template>
-              <template #cell(brand_id)="data">
-                <span v-if="data.item.brand_id"> {{ data.item.brand.name }} </span>
+              <template #cell(email)="data">
+                <span v-if="data.item.user_id" > {{ data.item.user.email }} </span>
               </template>
-              <template #cell(color)="data">
-                <span v-if="data.item.color_id"> {{ data.item.color.name }} </span>
+              <template #cell(phone_number)="data">
+                <span v-if="data.item.user_id" > {{ data.item.user.phone_number }} </span>
               </template>
-              <template #cell(category_id)="data">
-                <span v-if="data.item.category_id"> {{ data.item.category.name }} </span>
+              <template #cell(status)="data">
+                <span v-if="data.item.status == 'pending'" class="badge badge-secondary" > Chờ xử lý </span>
+                <span v-if="data.item.status == 'processing'" class="badge badge-info" > Đã xác nhận </span>
+                <span class="badge badge-success" v-if="data.item.status == 'completed'"> Đã thanh toán</span>
+                <button  v-if="data.item.status == 'pending'" @click="updateStatus(data.item.id)" class="btn btn-sm badge badge-warning"> Xác nhận </button>
               </template>
-              <template #cell(action)="data">
+              <template #cell(payment_method)="data">
+                <span v-if="data.item.payment_method == 'cast'" class="badge badge-secondary"> Tiền mặt</span>
+              </template>
+              <template #cell(product)="data">
+                <button @click="showModalProdcut(data.item.order_details)" class="btn btn-sm btn-info">Xem sản phẩm đã đặt</button>
+              </template>
+              
+              <!-- <template #cell(action)="data">
                 <button @click="editProduct(data.item)" class="btn btn-sm btn-info"><i
                     class="fa fa-edit mr-1 mt-1"></i>Sửa</button>
                 <button @click="deleteProduct(data.item.id)" class="btn btn-sm btn-danger"><i
                     class="fa fa-minus mr-1 mt-1"></i>Xóa</button>
-              </template>
+              </template> -->
             </b-table>
             <div class="row">
               <div class="col-md-12">
@@ -71,157 +79,33 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
-      <div class="form-group">
-        <div class="modal fade" id="product" tabindex="-1">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <form @submit.prevent="addProduct()">
-                <div class="modal-header">
-                  <h5 class="modal-title font-weight-bold text-uppercase">
-                    <span v-if="!edit">Thêm sản phẩm mới</span>
-                    <span v-else>Sửa sản phẩm</span>
-                  </h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="code">Mã sản phẩm</label><small class="text-danger">*</small>
-                    </div>
-                    <div class="col-lg-8">
-                      <input placeholder="Nhập mã" type="text" class="form-control" id="code" v-model="order.code"
-                        name="code" v-bind:class="hasError('code') ? 'is-invalid' : ''" />
-                      <span v-if="hasError('code')" class="invalid-feedback" role="alert">
-                        <strong>{{ getError('code') }}</strong></span>
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="name">Tên sản phẩm</label><small class="text-danger">*</small>
-                    </div>
-                    <div class="col-lg-8">
-                      <input placeholder="Nhập tên sản phẩm" type="text" class="form-control" id="name"
-                        v-model="order.name" name="name" v-bind:class="hasError('name') ? 'is-invalid' : ''" />
-                      <span v-if="hasError('name')" class="invalid-feedback" role="alert">
-                        <strong>{{ getError('name') }}</strong></span>
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Số tiền</label><small class="text-danger">*</small>
-                    </div>
-                    <div class="col-lg-8">
-                      <input v-model="order.price" class="form-control" placeholder="Nhập số tiền..." />
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Số lượng</label><small class="text-danger">*</small>
-                    </div>
-                    <div class="col-lg-8">
-                      <input v-model="order.quantity" class="form-control" placeholder="Nhập số lượng..." />
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Thượng hiệu</label><small class="text-danger">*</small>
-                    </div>
-                    <div class="col-lg-8">
-                      <select class="form-control" v-model="order.brand_id">
-                        <option v-for="(brand, index) in brands" :key="index" :value="brand.id"> {{ brand.name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Màu</label><small class="text-danger">*</small>
-                    </div>
-                    <div class="col-lg-8">
-                      <select class="form-control" v-model="order.color_id">
-                        <option v-for="(color, index) in colors" :key="index" :value="color.id"> {{ color.name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Danh mục</label><small class="text-danger">*</small>
-                    </div>
-                    <div class="col-lg-8">
-                      <select class="form-control" v-model="product.category_id">
-                        <option v-for="(category, index) in categories" :key="index" :value="category.id"> {{
-                          category.name }} </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Giới tính</label><small class="text-danger">*</small>
-                    </div>
-                    <div class="col-lg-8">
-                      <select class="form-control" v-model="order.gender">
-                        <option value="male">Nam</option>
-                        <option value="female">Nữ</option>
-                        <option value="female-male">Cặp đôi</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Xuất xứ</label>
-                    </div>
-                    <div class="col-lg-8">
-                      <input v-model="order.origin" class="form-control" placeholder="Nhập xuất xứ...." />
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Chức năng</label>
-                    </div>
-                    <div class="col-lg-8">
-                      <input v-model="order.function" class="form-control" placeholder="Nhập chức năng...." />
-                    </div>
-                  </div>
-                  <div class="form-group row align-items-baseline">
-                    <div class="col-lg-4">
-                      <label class="font-weight-bold" for="note">Ghi chú</label>
-                    </div>
-                    <div class="col-lg-8">
-                      <textarea placeholder="Nhập ghi chú" class="form-control" id="note" v-model="order.note"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="font-weight-bold" for="note">Hình ảnh</label>
-                    <input type="file" name="images[]" multiple class="form-control" accept="image/*"
-                      @change="handleFileUploadImage" />
-                    <div>
-                      <label>Danh sách ảnh đã chọn:</label>
-                      <div class="row">
-                        <div class="col-md-6 mt-2 image" v-for="(image, index) in order.images" :key="index">
-                          <div class="img-ralative">
-                            <img :src="image.path" class="w-100 img-responsive mt-2" alt="Ảnh đã chọn" loading="lazy">
-                            <button @click.prevent="deleteImage(index, image)" class="btn img-remove">
-                              <i class="fa fa-times-circle icon-remove"
-                                style="--fa-primary-color: #050505; --fa-secondary-color: #e6e6e6; --fa-secondary-opacity: 0.8;"></i>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                  <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Đóng</button>
-                  <button type="submit" class="btn btn-success btn-sm">Lưu lại</button>
-                </div>
-              </form>
-
+      <div class="modal fade" id="product" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Xem chi tiết</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <b-table :items="order_details" :fields="field_orders" responsive small>
+                  <template #cell(index)="data">
+                    <span> {{ data.index + 1 }} </span>
+                  </template>
+                  <template #cell(name)="data">
+                    <span v-if="data.item.product_id">
+                      {{ data.item.product.name }}
+                    </span>
+                  </template>
+                </b-table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -238,7 +122,7 @@ export default {
       edit: false,
       loading: false,
       errors: {},
-
+      order_details: [],
       fields: [
         {
           key: 'index',
@@ -247,45 +131,75 @@ export default {
           sortable: true,
         },
         {
-          key: 'code',
-          label: 'Mã đơn hàng',
+          key: 'user_id',
+          label: 'Người đặt hàng',
           class: "text-nowrap",
           sortable: true,
         },
         {
-          key: 'name',
-          label: 'Tên người nhận',
-          class: "text-nowrap",
-          sortable: true,
-        },
-        {
-          key: 'price',
+          key: 'email',
           label: 'Email',
           class: "text-nowrap",
           sortable: true,
         },
         {
-          key: 'quantity',
+          key: 'phone_number',
           label: 'Số điện thoại',
           class: "text-nowrap",
           sortable: true,
         },
         {
-          key: 'brand_id',
+          key: 'order_date',
+          label: 'Ngày đặt hàng',
+          class: "text-nowrap",
+          sortable: true,
+        },
+        {
+          key: 'payment_method',
+          label: 'Phương thức thanh toán',
+          class: "text-nowrap",
+          sortable: true,
+        },
+        {
+          key: 'status',
           label: 'Trạng thái',
           class: "text-nowrap",
           sortable: true,
         },
         {
-          key: 'color_id',
-          label: 'PP Thanh Toán',
+          key: 'product',
+          label: 'Sản phẩm',
           class: "text-nowrap",
           sortable: true,
         },
+         {
+          key: 'shipping_address',
+          label: 'Địa chỉ nhận hàng',
+          class: "text-nowrap",
+          sortable: true,
+        },
+       
+      ],
+      field_orders: [
         {
-          key: 'action',
-          label: 'Hành động',
-          class: "text-nowrap text-center",
+          key: 'index',
+          label: 'STT',
+        },
+        {
+          key: 'name',
+          label: 'Tên sản phẩm',
+        },
+        {
+          key: 'price',
+          label: 'Giá',
+        },
+        {
+          key: 'quantity',
+          label: 'Số lượng',
+        },
+        {
+          key: 'total_price',
+          label: 'Tổng tiền',
         },
       ],
       orders: [],
@@ -317,7 +231,7 @@ export default {
       brands: [],
       categories: [],
       colors: [],
-      page_url_product: "/api/list-product",
+      page_url_product: "/api/list-order",
       page_url_product_store: "/api/list-product-store",
       page_url_product_update: "/api/list-product-update",
       page_url_product_delete: "/api/list-product-delete",
@@ -325,6 +239,7 @@ export default {
       page_url_category: "/api/list-category",
       page_url_color: "/api/list-color",
 
+      page_url_processing: "/api/processing",
 
 
     }
@@ -405,101 +320,41 @@ export default {
 
         });
     },
-    addProduct() {
-      if (this.edit == false) {
-        var page_url = this.page_url_product_store;
-        fetch(page_url, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: this.token
-          },
-          body: JSON.stringify(this.product)
+    updateStatus(id){
+      var page_url = this.page_url_processing + "/" + id;
+      fetch(page_url, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.token
+        },
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.data.success == 1) {
+            this.fetchProduct();
+            this.$bvToast.toast(`Cập nhật thành công`, {
+              title: 'Thông báo',
+              variant: 'success',
+              solid: true
+            })
+          } else {
+            this.$bvToast.toast(`Cập nhật thất bại`, {
+              title: 'Thông báo',
+              variant: 'danger',
+              solid: true
+            })
+          }
         })
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-            if (data.data.success == 1) {
-              this.fetchProduct();
-              this.$bvToast.toast(`Thêm thành công`, {
-                title: 'Thông báo',
-                variant: 'success',
-                solid: true
-              })
-              $("#product").modal("hide");
-            } else {
-              this.errors = data.data.errors;
-              this.$bvToast.toast(`Thêm thất bại`, {
-                title: 'Thông báo',
-                variant: 'danger',
-                solid: true
-              })
-            }
+        .catch(err => {
+          console.log(err);
 
-          })
-          .catch(err => {
-            console.log(err);
-
-          });
-      } else {
-        var page_url = this.page_url_product_update + "/" + this.product.id;
-        fetch(page_url, {
-          method: "PUT",
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: this.token
-          },
-          body: JSON.stringify(this.product)
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.data.success == 1) {
-              this.fetchProduct();
-              this.$bvToast.toast(`Cập nhật thành công`, {
-                title: 'Thông báo',
-                variant: 'success',
-                solid: true
-              })
-              $("#product").modal("hide");
-            } else {
-              this.errors = data.data.errors;
-
-              this.$bvToast.toast(`Cập nhật thất bại`, {
-                title: 'Thông báo',
-                variant: 'danger',
-                solid: true
-              })
-            }
-          })
-          .catch(err => {
-            console.log(err);
-
-          });
-
-      }
-
+        });
     },
-    editProduct(product) {
-      this.edit = true;
-      this.order.id = product.id;
-      this.order.code = product.code;
-      this.order.name = product.name;
-      this.order.price = product.price;
-      this.order.quantity = product.quantity;
-      this.order.brand_id = product.brand_id;
-      this.order.color_id = product.color_id;
-      this.order.category_id = product.category_id;
-      this.order.gender = product.gender;
-      this.order.origin = product.origin;
-      this.order.function = product.function;
-      this.order.note = product.note;
-      this.order.images = product.images;
-
-      $("#product").modal("show");
-    },
-    showProduct() {
-      this.edit = false;
-      this.reset();
+  
+    showModalProdcut(item) {
+      console.log(item);
+      this.order_details = item;
       $("#product").modal("show");
     },
     hasError(fieldName) {
@@ -582,7 +437,7 @@ export default {
   },
   computed: {
     rows() {
-      return this.products.length;
+      return this.orders.length;
     }
   }
 }

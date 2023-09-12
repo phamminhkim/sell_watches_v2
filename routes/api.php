@@ -55,6 +55,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('list-order', [OrderController::class, 'index']);
     Route::post('order-store', [OrderController::class, 'store']);
+    Route::patch('processing/{id}', [OrderController::class, 'processing']);
+    Route::patch('success/{id}', [OrderController::class, 'success']);
 
 
 });

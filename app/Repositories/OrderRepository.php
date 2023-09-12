@@ -14,8 +14,15 @@ class OrderRepository
   public function getAll()
   {
     $user = auth()->user();
-    $query = Order::query()->with(['order_details.product.images']);
-    $query = $query->where('user_id', $user->id);
+    $query = Order::query()->with(['order_details.product.images', 'user']);
+    switch ($user->role) {
+      case 'user':
+        $query = $query->where('user_id', $user->id);
+        break;
+      default:
+        # code...
+        break;
+    }
     $order = $query->get();
     return $order;
   }
@@ -55,7 +62,6 @@ class OrderRepository
           $check_quantity_product->quantity = $check_quantity_product->quantity - $order_detail['quantity'];
           $check_quantity_product->save();
         }
-
       }
     }
     return $create;
@@ -71,6 +77,21 @@ class OrderRepository
     $ShoppingCard = $this->getById($id);
     $ShoppingCard->delete();
     return $ShoppingCard;
+  }
+
+  public function processing($id)
+  {
+    $order = $this->getById($id);
+    $order->status = 'processing';
+    $order->save();
+    return $order;
+  }
+
+  public function success($id){
+    $order = $this->getById($id);
+    $order->status = 'completed';
+    $order->save();
+    return $order;
   }
 
 }

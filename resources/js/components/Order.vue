@@ -32,9 +32,11 @@
                 <p>Số điện thoại: {{ current_user.phone_number || '' }} </p>
                 <p>Địa chỉ giao hàng: {{ order.shipping_address }} </p>
                 <p>Phương thức thanh toán: {{ order.payment_method === 'cast' ? 'Tiền mặt' : 'Đã thanh toán' }} </p>
-                <p><button class="btn btn-danger rounded-pill"> {{ order.status === 'pending' ? 'Đang xử lí' : 'Đã giao'
-                }}
-                  </button> </p>
+                <span class="badge badge-danger" v-if="order.status === 'pending'"> Chờ xử lý</span>
+                <span class="badge badge-info" v-if="order.status === 'processing'"> Đã xác nhận</span>
+                <span class="badge badge-success" v-if="order.status === 'completed'"> Đã thanh toán</span>
+
+                <button @click="updateSuccess(order.id)" v-if="order.status === 'processing'" class="btn btn-warning btn-sm float-right">Thanh toán</button>
               </div>
             </div>
             <div class="form-group text-right">
@@ -87,6 +89,7 @@ export default {
       ],
 
       page_url_order: '/api/list-order',
+      page_url_success: '/api/success',
     }
   },
   created() {
@@ -106,6 +109,21 @@ export default {
         .then(res => res.json())
         .then(data => {
           this.orders = data.data;
+        })
+    },
+    updateSuccess(id){
+      var page_url = this.page_url_success + "/" + id;
+      fetch(page_url, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.token
+        },
+       
+      })
+        .then(res => res.json())
+        .then(data => {
+          this.fetchOrder();
         })
     },
     total_price(order) {

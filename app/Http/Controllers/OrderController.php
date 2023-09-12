@@ -57,4 +57,28 @@ class OrderController extends AuthUserController
         }
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
+
+    public function processing($id){
+        $result['data'] = array();
+        $result['data']['success'] = 0;
+        $order = $this->orderRepository->processing($id);
+        if ($order) {
+            $result['data']['data'] = $order;
+            $result['data']['success'] = 1;
+        }
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function success($id){
+        $result['data'] = array();
+        $result['data']['success'] = 0;
+        $order = $this->orderRepository->success($id);
+        if ($order) {
+            $result['data']['data'] = $order;
+            $result['data']['success'] = 1;
+        }
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
+    
 }
